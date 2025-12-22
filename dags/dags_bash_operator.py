@@ -10,7 +10,7 @@ from airflow.sdk import DAG
 
 
 with DAG(
-    dag_id="example_bash_operator",
+    dag_id="dags_bash_operator",
     schedule="0 0 * * *",
     start_date=pendulum.datetime(2025, 12, 1, tz="Asia/Seoul"),
     catchup=False,
