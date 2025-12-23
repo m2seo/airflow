@@ -10,7 +10,7 @@ def extract_cdc():
     hook = MsSqlHook(mssql_conn_id="mssql_cdc")
     sql = """
     DECLARE @from_lsn VARBINARY(10) =
-      (SELECT last_lsn FROM etl_state WHERE job_name='orders_cdc');
+      (SELECT last_lsn FROM etl_state WHERE job_name='ItemLog_cdc');
       IF @from_lsn is null
 		 SET @from_lsn = sys.fn_cdc_get_min_lsn('dbo_ItemLog');
 
