@@ -3,6 +3,7 @@ from airflow.operators.python import PythonOperator
 from airflow.providers.microsoft.mssql.hooks.mssql import MsSqlHook
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 from datetime import datetime
+# import mssql
 import pandas as pd
 import io
 
@@ -23,22 +24,24 @@ def extract_cdc():
 
     if rows.empty:
         return
+    
+    print(rows)
 
-    # Parquet 변환
-    buffer = io.BytesIO()
-    rows.to_parquet(buffer, index=False)
+#     # Parquet 변환
+#     buffer = io.BytesIO()
+#     rows.to_parquet(buffer, index=False)
 
-    s3 = S3Hook(aws_conn_id="aws_default")
-    s3.load_bytes(
-        bytes_data=buffer.getvalue(),
-        key="cdc/orders/dt={{ ds }}/orders.parquet",
-        bucket_name="my-data-lake",
-        replace=True
-    )
+#     s3 = S3Hook(aws_conn_id="aws_default")
+#     s3.load_bytes(
+#         bytes_data=buffer.getvalue(),
+#         key="cdc/orders/dt={{ ds }}/orders.parquet",
+#         bucket_name="my-data-lake",
+#         replace=True
+#     )
 
-dag = DAG(
-    dag_id="sqlserver_cdc_to_s3",
-    start_date=datetime(2024, 1, 1),
-    schedule_interval="*/10 * * * *",
-    catchup=False
-)
+# dag = DAG(
+#     dag_id="sqlserver_cdc_to_s3",
+#     start_date=datetime(2024, 1, 1),
+#     schedule_interval="*/10 * * * *",
+#     catchup=False
+# )
